@@ -1,0 +1,31 @@
+<form #userform = "ngForm">
+  <div class="form-group">
+    <label for="exampleInputName">Name</label>
+    <input type="text" name="username" id="exampleInputName"  placeholder="Enter Name" [(ngModel)]="userModel.username">
+  </div>
+  <div class="form-group">
+    <label for="exampleInputEmail">Password</label>
+    <input type="email" name="email" id="exampleInputEmail" placeholder="Email" [(ngModel)]="userModel.email">
+  </div>
+  <div class="form-group">
+    <label for="exampleInputph">Number</label>
+    <input type="tel" name="phone" id="exampleInputph" placeholder="Phone Number" [(ngModel)]="userModel.phone">
+  </div>
+  <select class="custom-select" name="topic" [(ngModel)]="userModel.topic">
+    <option selected disabled>Select the topic</option>
+    <option *ngFor="let topic of topics">{{ topic }}</option>
+  </select>
+  <div class="custom-control custom-radio">
+    <input type="radio" id="customRadio1" value="morning"  name="shift" class="custom-control-input" [(ngModel)]="userModel.shift">
+    <label class="custom-control-label" for="customRadio1">Morning(9AM-11AM)</label>
+  </div>
+  <div class="custom-control custom-radio">
+    <input type="radio" id="customRadio2" value="evening" name="shift" class="custom-control-input" [(ngModel)]="userModel.shift">
+    <label class="custom-control-label" for="customRadio2">Evening(2PM-4PM)</label>
+  </div>
+  <div class="form-check">
+    <input type="checkbox" class="form-check-input" name="subscribe" id="exampleCheck1" [(ngModel)]="userModel.subscribe">
+    <label class="form-check-label" for="exampleCheck1">Send me email on new updates</label>
+  </div>
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
