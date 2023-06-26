@@ -9,6 +9,5 @@ import { User } from './user';
 export class AppComponent {
   title = 'forms';
   topics = ["HTML", "CSS", "JavaScript"];
-
   userModel = new User('bimo', 'bimo@gmail.com',98100000, 'HTML', 'morning', true);
 }
