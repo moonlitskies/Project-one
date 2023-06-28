@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
 
 @Component({
   selector: 'app-formarr',
@@ -9,11 +9,18 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 export class FormarrComponent {
   fieldmessage = "Please enter valid input";
   emailForm = new FormGroup({
-    email: new FormControl('',[Validators.required,Validators.email]),  //.pattern(<regx>) for the specific pattern
+    email: new FormControl('', [Validators.required, Validators.pattern('[a-zA-Z0-9._%+-]+@gmail.com')]),  //.pattern(<regx>) for the specific pattern
     password: new FormControl('',[Validators.required, Validators.maxLength(7)]),
+    skills: new FormArray([])
   })
   submits(){
     console.warn(this.emailForm.value)
+  }
+  addNew(): FormGroup{
+    return new FormGroup({
+      skill: new FormControl('', [Validators.required])
+      
+    }) 
   }
   get email()
   {

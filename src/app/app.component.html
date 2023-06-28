@@ -30,4 +30,61 @@
   <button type="submit" class="btn btn-primary">Submit</button>
 </form> -->
 
-<app-formarr></app-formarr>
+<!-- <app-formarr></app-formarr> -->
+<div class="container-fluid">
+  <h2>Registration form</h2>
+  {{registerForm.value | json}}
+  <form [formGroup]="registerForm">
+  <div class="form-group">
+    <label>Username</label>
+    <input type="text" class="form-control" formControlName="username">
+    <div *ngIf="UserName && UserName.invalid && UserName.touched">
+      <small *ngIf="UserName.errors?.['required']" class="text-danger">Username is required</small>
+      <small *ngIf="UserName.errors?.['minlength']" class="text-danger">Username must be at least five characters long</small>
+    </div> 
+  </div>
+  <div class="form-group">
+    <label>Email</label>
+    <input type="email" class="form-control" formControlName="email">
+    <div *ngIf="UserEmail && UserEmail.invalid && UserEmail.touched">
+      <small *ngIf="UserEmail.errors?.['required']" class="text-danger">Primary Email is required</small>
+      <small *ngIf="UserEmail.errors?.['pattern']" class="text-danger">Invalid Email</small>
+    </div>
+    <div formArrayName="alternateEmail" *ngFor="let email of AltEmail.controls; let i=index" >
+      <input  type="text" class="form-control my-2" [formControlName]="i">
+    </div>
+    <button  (click)="addAltEmail()" type="button" class="btn btn-secondary btn-sm my-2 ">Add alt email</button>
+  </div>
+  <div class="form-group">
+    <label>Password</label>
+    <input type="password" class="form-control" formControlName="password">
+    <div *ngIf="UserPass && UserPass.invalid && UserPass.touched">
+      <small *ngIf="UserPass.errors?.['required']" class="text-danger">Password is required</small>
+      <small *ngIf="UserPass.errors?.['minlength']" class="text-danger">Password be at least five characters long</small>
+    </div> 
+  </div>
+  <div class="form-group">
+    <label>Confirm Password</label>
+    <input type="password" class="form-control" formControlName="confirmPassword">
+  </div>
+  <div formGroupName="address">
+    <div class="form-group">
+      <label>City</label>
+      <input type="text" class="form-control" formControlName="city">
+    </div>
+    <div class="form-group">
+      <label>State</label>
+      <input type="text" class="form-control" formControlName="state">
+    </div>
+    <div class="form-group">
+      <label>Postal code</label>
+      <input type="number" class="form-control" formControlName="postalCode">
+    </div>
+  </div>
+  <button class="btn btn-primary" type="submit">Register</button> <br>
+  <button (click)="loadData()" class="btn btn-secondary my-2" type="button">Load Data</button>
+  </form>
+</div>
+
+
+

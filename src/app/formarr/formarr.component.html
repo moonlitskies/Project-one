@@ -9,7 +9,12 @@
         <input type="password" formControlName="password" class="form-control" id="exampleInputPassword"  placeholder="Enter Password">
         <span style="color: red;" *ngIf="password && password.invalid && password.touched">{{fieldmessage}}</span>
       </div>
-    <button [disabled]="emailForm.invalid" type="button" (click)="submits()" class="btn btn-primary mt-3"><i>+</i>Add more</button>
+      <div class="form-group">
+        <label for="exampleInputSkills">Skills</label>
+        <input type="text" formArrayName="skills" class="form-control" id="exampleInputSkills"  placeholder="Enter Skills">
+      </div>
+      <button class="btn btn-secondary my-2" (click)="addNew()">Add more skills</button><br>
+    <button [disabled]="emailForm.invalid" type="button" (click)="submits()" class="btn btn-primary mt-3">Submit</button>
 </form>
   
   
