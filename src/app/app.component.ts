@@ -1,34 +1,30 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 //import { User } from './user';
 //import { FormControl, FormGroup } from '@angular/forms';
 import { FormBuilder, Validators, FormArray } from '@angular/forms';
+//import { DataService } from './data.service';
+import { HttpClient } from '@angular/common/http';
+import {Subscription} from 'rxjs'
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit, OnDestroy{
+  private formSubscription: Subscription | undefined;
 
-  constructor(private fb: FormBuilder){}
+  constructor(private fb: FormBuilder, private http: HttpClient){}
+  ngOnInit(): void {
+    
+  }
   // title = 'forms';
   // topics = ["HTML", "CSS", "JavaScript"];
   // userModel = new User('bimo', 'bimo@gmail.com',98100000, 'HTML', 'morning', true);
 
-  //Same functionality can be acheived using FormBuilder Service
-  // registerForm = new FormGroup({
-  //   username: new FormControl(''),
-  //   password: new FormControl(''),
-  //   confirmPassword: new FormControl(''),
-  //   address: new FormGroup({
-  //     city: new FormControl(''),
-  //     state: new FormControl(''),
-  //     postalCode: new FormControl('')
-  //   })
-  // })
-
   //USING FORMBUILDER SERVICE
 
+ 
   registerForm = this.fb.group({
     username: ['', [Validators.required, Validators.minLength(5)]],
     email:['',[Validators.required, Validators.pattern('[a-zA-Z0-9._%+-]+@gmail.com')]],
@@ -84,4 +80,29 @@ loadData(){
       }
   })
 }
+submitForm() {
+  if (this.registerForm.valid) {
+    const formData = this.registerForm.value;
+
+    // Send POST request to localhost:3000/info
+    this.formSubscription = this.http
+      .post('http://localhost:3000/info', formData)
+      .subscribe({
+        next: (response) => {
+          console.log('Form data sent successfully!', response);
+          // Optionally, you can perform further actions upon successful submission
+        },
+        error: (error) => {
+          console.error('An error occurred while sending form data:', error);
+          // Handle error scenarios if needed
+        }
+      });
+  }
 }
+ngOnDestroy(): void {
+  if (this.formSubscription) {
+    this.formSubscription.unsubscribe();
+  }
+}
+}
+
